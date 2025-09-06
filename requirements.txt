@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+scikit-learn
+pandas
+numpy
+joblib
+pydantic
+prometheus-fastapi-instrumentator
+evidently
+pytest
+requests
+structlog
+python-dotenv
