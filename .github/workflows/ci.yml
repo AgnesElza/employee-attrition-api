@@ -16,10 +16,13 @@ env:
 jobs:
   build-test-push:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
@@ -30,6 +33,14 @@ jobs:
 
       - name: Run tests
         run: pytest -q
+
+      # --- Force lowercase image path and save to GITHUB_ENV ---
+      - name: Compute lowercase image name
+        run: |
+          OWNER_LC="${GITHUB_REPOSITORY_OWNER,,}"
+          REPO_LC="${{ github.event.repository.name }}"
+          REPO_LC="${REPO_LC,,}"
+          echo "IMAGE=ghcr.io/${OWNER_LC}/${REPO_LC}" >> "$GITHUB_ENV"
 
       - name: Login to GHCR
         uses: docker/login-action@v3
@@ -44,5 +55,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ toLower(github.repository) }}:latest
-            ghcr.io/${{ toLower(github.repository) }}:${{ github.sha }}
+            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
