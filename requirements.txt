@@ -11,3 +11,4 @@ pytest
 requests
 structlog
 python-dotenv
+evidently
