@@ -1,21 +1,26 @@
-# Multi-stage build not strictly necessary here; simple slim image
+# Dockerfile
 FROM python:3.11-slim
 
 WORKDIR /app
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
 
-# Install system deps (if needed for numpy/scikit-learn wheels)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
+# Install deps
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy code and data needed for training + serving
 COPY app/ app/
 COPY src/ src/
-COPY models/ models/
+COPY train.py .
+COPY data/ data/
+
+# === Train the model during the image build ===
+# Adjust the data path/target if yours differ
+RUN python train.py --data data/attrition.feather --target Attrition --outdir models/
+
+# (Optional) list the model to verify in build logs
+RUN ls -lh models/
 
 EXPOSE 8080
+
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+
