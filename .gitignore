@@ -11,4 +11,6 @@ data/*
 !data/.gitkeep
 docs/*
 !docs/.gitkeep
+!docs/drift_report.html
+!docs/drift_report.json
 .env

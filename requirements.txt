@@ -2,7 +2,7 @@ fastapi
 uvicorn
 scikit-learn
 pandas
-numpy
+numpy==1.26.4
 joblib
 pydantic
 prometheus-fastapi-instrumentator
