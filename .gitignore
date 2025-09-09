@@ -5,6 +5,7 @@ __pycache__/
 *.DS_Store
 *.Zone.Identifier
 models/*
+!models/model.joblib
 !models/.gitkeep
 data/*
 !data/.gitkeep
