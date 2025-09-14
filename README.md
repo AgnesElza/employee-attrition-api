@@ -6,14 +6,17 @@ Includes basic monitoring (Prometheus metrics) and weekly **Evidently** drift re
 ## Quickstart
 
 ```bash
-# 1) (optional) create a venv
+# 1) (optional) create and activate a virtual environment:
+#    using venv:
 python -m venv .venv && source .venv/bin/activate
+#    OR using conda:
+conda create -n employee-attrition-api python -y && conda activate employee-attrition-api
 
 # 2) install deps
 pip install -r requirements.txt
 
 # 3) train a quick model (uses a CSV you provide; defaults assume IBM HR attrition format)
-python -m src.train --data data/raw.csv --target Attrition --outdir models/
+python -m src.train --data data/attrition.feather --target Attrition --outdir models/
 
 # 4) run the API locally
 uvicorn app.main:app --reload --port 8080
@@ -48,5 +51,3 @@ docs/              # (auto-generated) GH Pages with latest drift report
 - Fly.io: `fly launch` → `flyctl deploy` (it will use the Dockerfile).
 
 ---
-
-_Generated: 2025-09-06_
