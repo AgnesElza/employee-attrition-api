@@ -23,8 +23,8 @@ docker build -t attrition-api:latest .
 docker run -p 8080:8080 attrition-api:latest
 ```
 
-**Swagger docs:** http://localhost:8080/docs  
-**Healthcheck:** http://localhost:8080/health  
+**Swagger docs:** http://localhost:8080/docs
+**Healthcheck:** http://localhost:8080/health
 **Metrics (Prometheus):** http://localhost:8080/metrics
 
 ## Repo layout
@@ -49,4 +49,4 @@ docs/              # (auto-generated) GH Pages with latest drift report
 
 ---
 
-_Generated: 2025-09-06T14:06:02.452966Z_
+_Generated: 2025-09-06_
