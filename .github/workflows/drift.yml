@@ -24,7 +24,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Generate drift report
-        run: python monitor/generate_drift_report.py
+        run: python drift_monitor/generate_drift_report.py
 
       - name: Commit report if changed
         uses: stefanzweifel/git-auto-commit-action@v5
